@@ -1,3 +1,3 @@
-module github.com/hashicorp/golang-lru/v2
+module github.com/ipcomai/golang-lru/v2
 
-go 1.18
+go 1.22
