@@ -65,7 +65,7 @@ func NewLRU[K comparable, V any](size int, onEvict EvictCallback[K, V], ttl time
 		evictList: internal.NewList[K, V](),
 		items:     make(map[K]*internal.Entry[K, V]),
 		onEvict:   onEvict,
-		done:      make(chan struct{}),
+		done:      make(chan struct{}, 1),
 	}
 
 	// initialize the buckets
@@ -277,17 +277,17 @@ func (c *LRU[K, V]) Resize(size int) (evicted int) {
 	return diff
 }
 
-// Close destroys cleanup goroutine. To clean up the cache, run Purge() before Close().
-// func (c *LRU[K, V]) Close() {
-//	c.mu.Lock()
-//	defer c.mu.Unlock()
-//	select {
-//	case <-c.done:
-//		return
-//	default:
-//	}
-//	close(c.done)
-// }
+// Close stops the cache from deleting expired entries and closes the done channel.
+func (c *LRU[K, V]) Close() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	select {
+	case <-c.done:
+		return
+	default:
+	}
+	close(c.done)
+}
 
 // removeOldest removes the oldest item from the cache. Has to be called with lock!
 func (c *LRU[K, V]) removeOldest() {
