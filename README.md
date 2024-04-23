@@ -7,7 +7,7 @@ thread safe LRU cache. It is based on the cache in Groupcache.
 Documentation
 =============
 
-Full docs are available on [Go Packages](https://pkg.go.dev/github.com/hashicorp/golang-lru/v2)
+Full docs are available on [Go Packages](https://pkg.go.dev/github.com/ipcomai/golang-lru/v2)
 
 LRU cache example
 =================
@@ -17,7 +17,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/hashicorp/golang-lru/v2"
+	"github.com/ipcomai/golang-lru/v2"
 )
 
 func main() {
@@ -41,7 +41,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/hashicorp/golang-lru/v2/expirable"
+	"github.com/ipcomai/golang-lru/v2/expirable"
 )
 
 func main() {
